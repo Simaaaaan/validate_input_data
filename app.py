@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template
-import re
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -15,7 +14,7 @@ def handle_form():
     email = request.form.get('email')
 
     # Validate ID number (assuming 台灣ID)
-    if len(id_number)!=10:
+    if len(id_number) != 10:
         return "身分證號碼應該為10碼", 400
 
     if not id_number[0].isalpha():
@@ -32,23 +31,18 @@ def handle_form():
         'U': 28, 'V': 29, 'W': 32, 'X': 30, 'Y': 31, 'Z': 33
     }
     first_digit = letter_to_number.get(id_number[0].upper())
-    
     first_sum = first_digit // 10 + (first_digit % 10) * 9
-    
     weights = [8, 7, 6, 5, 4, 3, 2, 1]
     remaining_sum = sum(int(id_number[i]) * weights[i-1] for i in range(1, 9))
-    
     total_sum = first_sum + remaining_sum
-    
-    return total_sum % 10 == 0
 
-    if validate_taiwan_id(id_number):
-        print("Taiwan ID number is valid.")
+    if total_sum % 10 == 0:
+        return "Taiwan ID number is valid", 200
     else:
-        print("Taiwan ID number is not valid.")
+        return "Taiwan ID number is not valid", 400
 
     # Validate name (assuming it's alphabetic)
-    if not re.match(r'^[A-Za-z\s]+$', name):
+    if not name.isalpha():
         return "Invalid name", 400
 
     # Validate gender
@@ -63,4 +57,3 @@ def handle_form():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)  # Listen on all available network interfaces and port 80
-
