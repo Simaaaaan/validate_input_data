@@ -18,6 +18,9 @@ def handle_form():
     if len(id_number)!=10:
         return "身分證號碼應該為10碼", 400
 
+    if not id_number[0].isalpha():
+        return "身分證號碼第一個字元應該為英文字母", 400
+
     # Validate name (assuming it's alphabetic)
     if not re.match(r'^[A-Za-z\s]+$', name):
         return "Invalid name", 400
