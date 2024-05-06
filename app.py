@@ -41,8 +41,8 @@ def handle_form():
     else:
         return "Taiwan ID number is not valid", 400
 
-    # Validate name (assuming it's alphabetic)
-    if not name.isalpha():
+        # Validate name (assuming it's alphabetic)
+    if not re.match(r'^[A-Za-z\s]+$', name):
         return "Invalid name", 400
 
     # Validate gender
