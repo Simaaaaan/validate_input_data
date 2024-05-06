@@ -31,10 +31,14 @@ def handle_form():
         'U': 28, 'V': 29, 'W': 32, 'X': 30, 'Y': 31, 'Z': 33
     }
     first_digit = letter_to_number.get(id_number[0].upper())
+    
     first_sum = first_digit // 10 + (first_digit % 10) * 9
+    
     weights = [8, 7, 6, 5, 4, 3, 2, 1]
     remaining_sum = sum(int(id_number[i]) * weights[i-1] for i in range(1, 9))
+    
     total_sum = first_sum + remaining_sum
+    
 
     if total_sum % 10 == 0:
         return "Taiwan ID number is valid", 200
