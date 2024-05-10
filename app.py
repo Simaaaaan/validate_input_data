@@ -24,7 +24,7 @@ def handle_form():
     if not id_number[1:].isdigit():
         return "身分證號碼後九個字元應該為數字", 400
 
-         letter_to_number = {
+    letter_to_number = {
         'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14,
         'F': 15, 'G': 16, 'H': 17, 'I': 34, 'J': 18,
         'K': 19, 'L': 20, 'M': 21, 'N': 22, 'O': 35,
