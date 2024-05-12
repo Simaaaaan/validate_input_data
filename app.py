@@ -24,24 +24,26 @@ def handle_form():
     if not id_number[1:].isdigit():
         return "身分證號碼後九個字元應該為數字", 400
 
-    letter_to_number = {
-        'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14,
-        'F': 15, 'G': 16, 'H': 17, 'I': 34, 'J': 18,
-        'K': 19, 'L': 20, 'M': 21, 'N': 22, 'O': 35,
-        'P': 23, 'Q': 24, 'R': 25, 'S': 26, 'T': 27,
-        'U': 28, 'V': 29, 'W': 32, 'X': 30, 'Y': 31, 'Z': 33
-    }
+ # Convert first character to corresponding number
+    if first_char.isupper():  # Ensure it's an uppercase letter
+        first_digit = ord(first_char) - ord('A') + 10
+    else:
+        return "第一個字元應該為大寫英文字母", 400
     
-    first_digit = letter_to_number.get(id_number[0].upper())
-    first_sum = (first_digit % 10) * 9 + (first_digit // 10)
+    # Calculate sum of products of digits and weights
+    sum_products = first_digit * 1
+    for i in range(2, 10):
+        digit = int(id_number[i - 1])
+        weight = 10 - i + 1
+        sum_products += digit * weight
+    
+    # Add the last digit
+    sum_products += int(id_number[9])
 
-    weights = [8, 7, 6, 5, 4, 3, 2, 1]
-    remaining_sum = sum(int(id_number[i]) * weights[i] for i in range(1, 10))
+    # Check if the sum modulo 10 equals to 0
+    if sum_products % 10 != 0:
+        return "身分證號碼檢查碼錯誤", 400
 
-    total_sum = first_sum + remaining_sum
-
-    if total_sum % 10 != 0:
-        return "Taiwan ID number is not valid", 400
         
     # Validate name (assuming it's alphabetic)
     if not re.match(r'^[A-Za-z\s]+$',name):
