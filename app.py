@@ -25,8 +25,8 @@ def handle_form():
         return "身分證號碼後九個字元應該為數字", 400
 
  # Convert first character to corresponding number
-    if first_char.isupper():  # Ensure it's an uppercase letter
-        first_digit = ord(first_char) - ord('A') + 10
+    if id_number[0].isupper():  # Ensure it's an uppercase letter
+        first_digit = ord(id_number[0]) - ord('A') + 10
     else:
         return "第一個字元應該為大寫英文字母", 400
     
@@ -44,7 +44,6 @@ def handle_form():
     if sum_products % 10 != 0:
         return "身分證號碼檢查碼錯誤", 400
 
-        
     # Validate name (assuming it's alphabetic)
     if not re.match(r'^[A-Za-z\s]+$',name):
         return "Invalid name", 400
