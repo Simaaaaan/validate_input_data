@@ -32,7 +32,7 @@ def handle_form():
     
     # Calculate sum of products of digits and weights
     sum_products = first_digit * 1
-    for i in range(2, 10):
+    for i in range(2, 11):
         digit = int(id_number[i - 1])
         weight = 10 - i + 2
         sum_products += digit * weight
