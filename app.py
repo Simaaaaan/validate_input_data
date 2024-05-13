@@ -14,7 +14,7 @@ def handle_form():
     gender = request.form.get('gender')
     email = request.form.get('email')
 
-    # Validate ID number (assuming 台灣ID)(
+    # Validate ID number (assuming 台灣ID)
     if len(id_number) != 10:
         return "身分證號碼應該為10碼", 400
 
@@ -34,7 +34,7 @@ def handle_form():
     sum_products = first_digit * 1
     for i in range(2, 10):
         digit = int(id_number[i - 1])
-        weight = 10 - i + 1
+        weight = 10 - i + 2
         sum_products += digit * weight
     
     # Add the last digit
